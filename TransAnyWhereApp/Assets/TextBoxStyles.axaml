@@ -1,0 +1,23 @@
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style Selector="TextBlock">
+		<Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+	</Style>
+
+	<Style Selector="TextBox">
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="Background" Value="{StaticResource InputBackground}"/>
+		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="CaretBrush" Value="{StaticResource BrandBlue}"/>
+		<Setter Property="Padding" Value="10,0"/>
+		<Setter Property="MinHeight" Value="38"/>
+		<Setter Property="BorderBrush" Value="{StaticResource TextBorder}"/>
+		<Setter Property="CornerRadius" Value="{StaticResource MainCornerRadius}"/>
+	</Style>
+
+	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="{StaticResource InputBackground}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource BrandBlue}"/>
+		<Setter Property="BorderThickness" Value="1.5"/>
+	</Style>
+</Styles>

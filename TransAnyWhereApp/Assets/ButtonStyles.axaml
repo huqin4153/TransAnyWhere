@@ -1,0 +1,36 @@
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style Selector="Button.Primary">
+		<Setter Property="Background" Value="{StaticResource BrandBlue}"/>
+		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="Padding" Value="12,10"/>
+		<Setter Property="CornerRadius" Value="{StaticResource ButtonCornerRadius}"/>
+		<Setter Property="Transitions">
+			<Transitions>
+				<BrushTransition Property="Background" Duration="0:0:0.2"/>
+			</Transitions>
+		</Setter>
+	</Style>
+	<Style Selector="Button.Primary:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BrandBlueHover}"/>
+		<Setter Property="Foreground" Value="White"/>
+	</Style>
+
+	<Style Selector="Button.ToolButton">
+		<Setter Property="Background" Value="{StaticResource ButtonBorder}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="10,8"/>
+		<Setter Property="CornerRadius" Value="{StaticResource MainCornerRadius}"/>
+		<Setter Property="Transitions">
+			<Transitions>
+				<BrushTransition Property="Background" Duration="0:0:0.2"/>
+			</Transitions>
+		</Setter>
+	</Style>
+	<Style Selector="Button.ToolButton:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource ButtonHoverBg}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource BrandBlue}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="Foreground" Value="White"/>
+	</Style>
+</Styles>

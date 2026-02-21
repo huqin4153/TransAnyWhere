@@ -1,0 +1,101 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<x:String x:Key="H_TitleReady">传输已准备就绪</x:String>
+	<x:String x:Key="H_BtnSendToPC">发送到电脑</x:String>
+	<x:String x:Key="H_LabelCurrentDevice">当前设备:</x:String>
+	<x:String x:Key="H_StatusLoading">加载中...</x:String>
+	<x:String x:Key="H_TipClickToEdit">(点击修改)</x:String>
+	<x:String x:Key="H_StatusConnecting">正在连接 WebSocket...</x:String>
+	<x:String x:Key="H_TitleDownloadList">待接收文件</x:String>
+	<x:String x:Key="H_BtnSaveAll">全部保存</x:String>
+	<x:String x:Key="H_BtnClear">清空</x:String>
+	<x:String x:Key="H_BtnReceiveFile">接收文件</x:String>
+	<x:String x:Key="H_StatusTransferring">正在传输...</x:String>
+	<x:String x:Key="H_StatusPreparing">准备中...</x:String>
+	<x:String x:Key="H_TipKeepAwake">请保持此屏幕常亮</x:String>
+	<x:String x:Key="H_BtnCancel">取消传输</x:String>
+	<x:String x:Key="H_LabelSize">大小:</x:String>
+
+	<x:String x:Key="H_PromptNewName">请输入新的设备名称：</x:String>
+	<x:String x:Key="H_AlertDownloadTip">已尝试唤起所有下载。若文件未全部弹出，请在浏览器地址栏检查并勾选‘始终允许弹出窗口’。</x:String>
+	<x:String x:Key="H_ConfirmClearList">确定要清空待接收列表吗？</x:String>
+	<x:String x:Key="H_ConfirmCancel">确定要取消吗？</x:String>
+	<x:String x:Key="H_AlertNoFile">请先选择文件 📁</x:String>
+	<x:String x:Key="H_AlertNoConn">未连接到电脑！</x:String>
+	<x:String x:Key="H_AlertConnLost">传输中断：连接已丢失。请检查服务端是否崩溃。</x:String>
+	<x:String x:Key="H_TransferError">传输失败: </x:String>
+	<x:String x:Key="H_StatusBackendError">后端报错: ${data}</x:String>
+	<x:String x:Key="H_ChunkTimeout">分片 ${currentChunkIndex} 响应超时</x:String>
+
+	<x:String x:Key="H_StatusConnected">✅ 已成功连接: ${deviceName}</x:String>
+	<x:String x:Key="H_TransferIndex">[${i + 1}/${files.length}] ${percent}%</x:String>
+	<x:String x:Key="H_StatusTransferringDetail">正在传输: ${file.name}</x:String>
+	<x:String x:Key="H_StatusWaitingSave">⏳ 等待服务端保存: ${file.name}</x:String>
+	<x:String x:Key="H_StatusSendSuccess">✅ 成功发送 ${successCount} 个文件！</x:String>
+
+	<x:String x:Key="L_Log_Start">🚀 服务已在端口 {0} 启动</x:String>
+	<x:String x:Key="L_Log_Error">❌ 服务异常终止: {0}</x:String>
+	<x:String x:Key="L_Log_Stop">🛑 服务已停止，所有连接已强制释放</x:String>
+	<x:String x:Key="L_Log_FilePrep">📄 准备接收新文件: {0}</x:String>
+	<x:String x:Key="L_Log_FileDone">✅ 文件 {0} 接收完成</x:String>
+	<x:String x:Key="L_Log_TransInt">❌ {0} 传输中断: {1}</x:String>
+	<x:String x:Key="L_Log_NetLost">⚠️ 网络连接中断，传输已取消</x:String>
+	<x:String x:Key="L_Log_NotOnline">⚠️ 无法发送消息：设备 {0} 不在线</x:String>
+	<x:String x:Key="L_Log_PushFail">❌ 向 {0} 推送消息失败: {1}</x:String>
+	<x:String x:Key="L_UnknownFile">未知文件</x:String>
+
+	<x:String x:Key="E_File_StreamNotInit">写入失败：文件流尚未初始化，请先调用 PrepareFile。</x:String>
+	<x:String x:Key="L_Unknown">未知</x:String>
+
+	<x:String x:Key="M_ClientCount">当前已连接: {0} 台设备</x:String>
+	<x:String x:Key="M_DeviceOffline">📱 设备 {0} 已离线</x:String>
+	<x:String x:Key="M_EstablishingConn">正在与 {0} 建立安全连接...</x:String>
+	<x:String x:Key="M_SyncDone">✅ 已同步 {0} 个文件</x:String>
+	<x:String x:Key="M_FileAdded">已添加 {0} 个文件</x:String>
+
+	<x:String x:Key="M_Err_NoIP">未找到可用的局域网IP</x:String>
+	<x:String x:Key="M_Err_GetIPFail">获取IP失败: {0}</x:String>
+	<x:String x:Key="M_Err_OpenFolderFail">无法打开文件夹: {0}</x:String>
+	<x:String x:Key="M_Warn_SelectDevice">⚠️ 请先勾选接收设备</x:String>
+	<x:String x:Key="M_Notify_PathUpdated">下载路径已更新 ✅</x:String>
+
+	<x:String x:Key="M_Title_SelectFiles">选择文件</x:String>
+	<x:String x:Key="M_Title_SelectFolder">选择下载目录</x:String>
+	<x:String x:Key="M_Notify_Copied">地址已复制到剪贴板 ✅</x:String>
+
+	<x:String x:Key="U_Title_ConnectedDevices">已连接设备</x:String>
+	<x:String x:Key="U_Btn_Disconnect">断开连接</x:String>
+	<x:String x:Key="U_Title_ConnRequest">连接请求</x:String>
+	<x:String x:Key="U_Msg_DeviceRequest">设备 “{0}” 申请连接到此电脑</x:String>
+	<x:String x:Key="U_Btn_Reject">拒绝</x:String>
+	<x:String x:Key="U_Btn_Accept">允许</x:String>
+	<x:String x:Key="U_Label_DownloadDir">下载目录</x:String>
+	<x:String x:Key="U_Hint_StoragePos">接收文件存储位置</x:String>
+	<x:String x:Key="U_Btn_Browse">浏览...</x:String>
+	<x:String x:Key="U_Btn_ConnQR">连接二维码</x:String>
+	<x:String x:Key="U_Label_Connected">已连接:</x:String>
+	<x:String x:Key="U_Title_ScanQR">扫码连接</x:String>
+	<x:String x:Key="U_Btn_Close">关闭</x:String>
+	<x:String x:Key="U_Btn_Copy">复制</x:String>
+	<x:String x:Key="U_Btn_SelectFilesMain">＋ 选择待发送文件</x:String>
+	<x:String x:Key="U_Btn_AddFiles">选择文件</x:String>
+	<x:String x:Key="U_Btn_StartAll">全部开始</x:String>
+	<x:String x:Key="U_Btn_ClearDone">清空已完成</x:String>
+	<x:String x:Key="U_Title_SendQueue">📤 发送队列</x:String>
+	<x:String x:Key="U_Title_ReceiveRecord">📥 接收记录</x:String>
+
+	<x:String x:Key="U_Label_Target">投送目标:</x:String>
+	<x:String x:Key="U_Btn_SelectAllToggle">全选/取消</x:String>
+
+	<x:String x:Key="U_Hint_DragDrop">拖拽文件到此处发送</x:String>
+	<x:String x:Key="U_Hint_NoReceive">暂无接收记录</x:String>
+	<x:String x:Key="U_Label_SelectNetwork">选择网卡:</x:String>
+
+	<x:String x:Key="S_Status_Pending">等待中</x:String>
+	<x:String x:Key="S_Status_Transferring">传输中</x:String>
+	<x:String x:Key="S_Status_Completed">已完成</x:String>
+	<x:String x:Key="S_Status_Error">发生错误</x:String>
+	<x:String x:Key="S_Status_Paused">已暂停</x:String>
+	<x:String x:Key="S_Status_Cancelled">已取消</x:String>
+	<x:String x:Key="S_Status_Failed">传输失败</x:String>
+</ResourceDictionary>

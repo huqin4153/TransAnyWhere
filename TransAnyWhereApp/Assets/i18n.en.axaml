@@ -1,0 +1,101 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<x:String x:Key="H_TitleReady">Ready for Transfer</x:String>
+	<x:String x:Key="H_BtnSendToPC">Send to PC</x:String>
+	<x:String x:Key="H_LabelCurrentDevice">Current Device:</x:String>
+	<x:String x:Key="H_StatusLoading">Loading...</x:String>
+	<x:String x:Key="H_TipClickToEdit">(Click to edit)</x:String>
+	<x:String x:Key="H_StatusConnecting">Connecting to WebSocket...</x:String>
+	<x:String x:Key="H_TitleDownloadList">Pending Files</x:String>
+	<x:String x:Key="H_BtnSaveAll">Save All</x:String>
+	<x:String x:Key="H_BtnClear">Clear</x:String>
+	<x:String x:Key="H_BtnReceiveFile">Receive</x:String>
+	<x:String x:Key="H_StatusTransferring">Transferring...</x:String>
+	<x:String x:Key="H_StatusPreparing">Preparing...</x:String>
+	<x:String x:Key="H_TipKeepAwake">Please keep this screen on</x:String>
+	<x:String x:Key="H_BtnCancel">Cancel</x:String>
+	<x:String x:Key="H_LabelSize">Size:</x:String>
+
+	<x:String x:Key="H_PromptNewName">Please enter a new device name:</x:String>
+	<x:String x:Key="H_AlertDownloadTip">Attempted to trigger all downloads. If files didn't pop up, please check the browser address bar and select 'Always allow pop-ups'.</x:String>
+	<x:String x:Key="H_ConfirmClearList">Are you sure you want to clear the pending list?</x:String>
+	<x:String x:Key="H_ConfirmCancel">Are you sure you want to cancel?</x:String>
+	<x:String x:Key="H_AlertNoFile">Please select a file first 📁</x:String>
+	<x:String x:Key="H_AlertNoConn">Not connected to PC!</x:String>
+	<x:String x:Key="H_AlertConnLost">Transfer interrupted: Connection lost. Please check if the server crashed.</x:String>
+	<x:String x:Key="H_TransferError">Transfer failed: </x:String>
+	<x:String x:Key="H_StatusBackendError">Backend error: ${data}</x:String>
+	<x:String x:Key="H_ChunkTimeout">Chunk ${currentChunkIndex} response timed out</x:String>
+
+	<x:String x:Key="H_StatusConnected">✅ Connected: ${deviceName}</x:String>
+	<x:String x:Key="H_TransferIndex">[${i + 1}/${files.length}] ${percent}%</x:String>
+	<x:String x:Key="H_StatusTransferringDetail">Transferring: ${file.name}</x:String>
+	<x:String x:Key="H_StatusWaitingSave">⏳ Waiting for server to save: ${file.name}</x:String>
+	<x:String x:Key="H_StatusSendSuccess">✅ ${successCount} files sent successfully!</x:String>
+
+	<x:String x:Key="L_Log_Start">🚀 Service started on port {0}</x:String>
+	<x:String x:Key="L_Log_Error">❌ Service terminated abnormally: {0}</x:String>
+	<x:String x:Key="L_Log_Stop">🛑 Service stopped, all connections released</x:String>
+	<x:String x:Key="L_Log_FilePrep">📄 Preparing to receive: {0}</x:String>
+	<x:String x:Key="L_Log_FileDone">✅ File {0} received successfully</x:String>
+	<x:String x:Key="L_Log_TransInt">❌ {0} transfer interrupted: {1}</x:String>
+	<x:String x:Key="L_Log_NetLost">⚠️ Network disconnected, transfer cancelled</x:String>
+	<x:String x:Key="L_Log_NotOnline">⚠️ Cannot send message: Device {0} is offline</x:String>
+	<x:String x:Key="L_Log_PushFail">❌ Failed to push message to {0}: {1}</x:String>
+	<x:String x:Key="L_UnknownFile">Unknown File</x:String>
+
+	<x:String x:Key="E_File_StreamNotInit">Write failed: File stream not initialized. Call PrepareFile first.</x:String>
+	<x:String x:Key="L_Unknown">Unknown</x:String>
+
+	<x:String x:Key="M_ClientCount">Connected: {0} device(s)</x:String>
+	<x:String x:Key="M_DeviceOffline">📱 Device {0} is offline</x:String>
+	<x:String x:Key="M_EstablishingConn">Establishing secure connection with {0}...</x:String>
+	<x:String x:Key="M_SyncDone">✅ {0} file(s) synchronized</x:String>
+	<x:String x:Key="M_FileAdded">{0} file(s) added</x:String>
+
+	<x:String x:Key="M_Err_NoIP">No available local IP found</x:String>
+	<x:String x:Key="M_Err_GetIPFail">Failed to get IP: {0}</x:String>
+	<x:String x:Key="M_Err_OpenFolderFail">Cannot open folder: {0}</x:String>
+	<x:String x:Key="M_Warn_SelectDevice">⚠️ Please select recipient devices</x:String>
+	<x:String x:Key="M_Notify_PathUpdated">Download path updated ✅</x:String>
+
+	<x:String x:Key="M_Title_SelectFiles">Select Files</x:String>
+	<x:String x:Key="M_Title_SelectFolder">Select Download Folder</x:String>
+	<x:String x:Key="M_Notify_Copied">Address copied to clipboard ✅</x:String>
+
+	<x:String x:Key="U_Title_ConnectedDevices">Connected Devices</x:String>
+	<x:String x:Key="U_Btn_Disconnect">Disconnect</x:String>
+	<x:String x:Key="U_Title_ConnRequest">Connection Request</x:String>
+	<x:String x:Key="U_Msg_DeviceRequest">Device "{0}" wants to connect to this PC</x:String>
+	<x:String x:Key="U_Btn_Reject">Reject</x:String>
+	<x:String x:Key="U_Btn_Accept">Allow</x:String>
+	<x:String x:Key="U_Label_DownloadDir">Download Directory</x:String>
+	<x:String x:Key="U_Hint_StoragePos">Storage location for received files</x:String>
+	<x:String x:Key="U_Btn_Browse">Browse...</x:String>
+	<x:String x:Key="U_Btn_ConnQR">Connection QR</x:String>
+	<x:String x:Key="U_Label_Connected">Connected:</x:String>
+	<x:String x:Key="U_Title_ScanQR">Scan to Connect</x:String>
+	<x:String x:Key="U_Btn_Close">Close</x:String>
+	<x:String x:Key="U_Btn_Copy">Copy</x:String>
+	<x:String x:Key="U_Btn_SelectFilesMain">＋ Select Files to Send</x:String>
+	<x:String x:Key="U_Btn_AddFiles">Add Files</x:String>
+	<x:String x:Key="U_Btn_StartAll">Start All</x:String>
+	<x:String x:Key="U_Btn_ClearDone">Clear Done</x:String>
+	<x:String x:Key="U_Title_SendQueue">📤 Send Queue</x:String>
+	<x:String x:Key="U_Title_ReceiveRecord">📥 Received Records</x:String>
+
+	<x:String x:Key="U_Label_Target">Target Devices:</x:String>
+	<x:String x:Key="U_Btn_SelectAllToggle">Select All/None</x:String>
+
+	<x:String x:Key="U_Hint_DragDrop">Drag &amp; drop files here to send</x:String>
+	<x:String x:Key="U_Hint_NoReceive">No records found</x:String>
+	<x:String x:Key="U_Label_SelectNetwork">Select Network:</x:String>
+
+	<x:String x:Key="S_Status_Pending">Pending</x:String>
+	<x:String x:Key="S_Status_Transferring">Transferring</x:String>
+	<x:String x:Key="S_Status_Completed">Completed</x:String>
+	<x:String x:Key="S_Status_Error">Error</x:String>
+	<x:String x:Key="S_Status_Paused">Paused</x:String>
+	<x:String x:Key="S_Status_Cancelled">Cancelled</x:String>
+	<x:String x:Key="S_Status_Failed">Failed</x:String>
+</ResourceDictionary>

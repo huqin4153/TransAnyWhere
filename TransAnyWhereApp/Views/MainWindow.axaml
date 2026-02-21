@@ -1,0 +1,20 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="using:TransAnyWhereApp.Views"
+        x:Class="TransAnyWhereApp.Views.MainWindow"
+        Title="TransAnyWhere"
+        Width="900" Height="650"
+        MinWidth="800" MinHeight="500"
+        WindowStartupLocation="CenterScreen" 
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        TransparencyLevelHint="Mica, AcrylicBlur"
+        Background="#1E1E1E"  
+        DragDrop.AllowDrop="True">
+    
+    <Grid RowDefinitions="30, *">
+        <Rectangle Grid.Row="0" Fill="Transparent" IsHitTestVisible="False" />
+        
+        <views:MainView Grid.Row="1" />
+    </Grid>
+</Window>

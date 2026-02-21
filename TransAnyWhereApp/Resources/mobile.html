@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>TransAnyWhere</title>
+    <style>
+        body {
+            background: #121212;
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .btn:active {
+                background: #0056b3;
+            }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 13px;
+        }
+
+        .btn-done {
+            background: #444 !important;
+            color: #888;
+        }
+
+        #status {
+            margin-top: 25px;
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .file-box {
+            border: 2px dashed #333;
+            padding: 30px 10px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #transferOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader {
+            border: 4px solid #333;
+            border-top: 4px solid #007AFF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <h2>{{H_TitleReady}}</h2>
+    <div class='file-box'>
+        <input type='file' id='fileInput' style='margin-bottom: 20px;' multiple><br>
+        <button class='btn' onclick='uploadFile()'>{{H_BtnSendToPC}}</button>
+    </div>
+
+    <div id="device" style="margin-bottom: 10px; cursor: pointer;" onclick="changeDeviceName()">
+        {{H_LabelCurrentDevice}} <b id="currentName" style="color: #28CD41;">{{H_StatusLoading}}</b>
+        <span style="font-size: 12px; color: #666;">{{H_TipClickToEdit}}</span>
+    </div>
+
+    <div id='status'>{{H_StatusConnecting}}</div>
+
+    <div id="downloadList" style="display:none; background: #1e1e1e; border-radius: 12px; padding: 15px; margin-top: 20px; border: 1px solid #333; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+
+        <h3 style="margin-top:0; font-size: 16px; color: #FFD700; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">{{H_TitleDownloadList}}</h3>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <button class="btn" style="flex: 3; background: #28CD41; padding: 12px; font-weight: bold; color: white; border: none; border-radius: 8px; cursor: pointer;" onclick="downloadAll()">{{H_BtnSaveAll}}</button>
+            <button onclick="clearList()" style="flex: 1; background: #333; color: #ff4d4f; border: 1px solid #444; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px;">{{H_BtnClear}}</button>
+        </div>
+
+        <div id="downloadItems"></div>
+    </div>
+
+    <div id="transferOverlay">
+        <div class="loader"></div>
+        <h2 style="color: #007AFF; margin-top: 20px;">{{H_StatusTransferring}}</h2>
+        <div id="smallStatus" style="color: #aaa; font-size: 14px; margin-top: 5px;">{{H_StatusPreparing}}</div>
+        <div id="bigStatus" style="font-size: 24px; margin: 15px 0;">0%</div>
+        <p style="color: #FFD700; font-weight: bold;">{{H_TipKeepAwake}}</p>
+        <button class="btn" style="margin-top: 30px; background: #333;" onclick="cancelTransfer()">{{H_BtnCancel}}</button>
+    </div>
+
+    <script>
+        let ws;
+        let retryCount = 0;
+        const maxRetries = 5;
+        let isTransferring = false;
+        let wakeLock = null;
+        let pendingDownloads = [];
+        let ackResolver = null;
+        let finalResolver = null;
+
+        let deviceName = localStorage.getItem('transfer_device_name');
+        if (!deviceName) {
+            const platform = (navigator.platform.includes('Win') ? 'PC' : (navigator.userAgent.includes('Android') ? 'Android' : 'iPhone'));
+            deviceName = platform + '_' + Math.random().toString(36).substring(2, 5).toUpperCase();
+            localStorage.setItem('transfer_device_name', deviceName);
+        }
+        document.getElementById("currentName").innerText = deviceName;
+
+        function changeDeviceName() {
+            const newName = prompt("{{H_PromptNewName}}", deviceName);
+            if (newName && newName.trim() !== "") {
+                localStorage.setItem('transfer_device_name', newName.trim().substring(0, 15));
+                location.reload();
+            }
+        }
+
+        function renderDownloadList() {
+            const outerContainer = document.getElementById('downloadList');
+            const itemsContainer = document.getElementById('downloadItems');
+
+            if (!outerContainer || !itemsContainer) return;
+
+            if (pendingDownloads.length > 0) {
+                outerContainer.style.display = 'block';
+
+                itemsContainer.innerHTML = pendingDownloads.map(file => `
+                        <div class="file-item" style="background: #2a2a2a; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #FFD700; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; margin-right: 10px;">
+                                <div style="color: #fff; font-weight: bold; word-break: break-all; font-size: 14px;">${file.name}</div>
+                                <div style="color: #aaa; font-size: 12px; margin-top: 4px;">{{H_LabelSize}} ${file.sizeText}</div>
+                            </div>
+                            <a href="${file.url}"
+                               target="_blank"
+                               download="${file.name}"
+                               style="background: #007bff; color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; white-space: nowrap;">
+                                {{H_BtnReceiveFile}}
+                            </a>
+                        </div>
+                    `).join('');
+            } else {
+                outerContainer.style.display = 'none';
+            }
+        }
+
+        async function downloadAll() { 
+            if (pendingDownloads.length === 0) return;
+
+            if (!confirm("{{H_AlertDownloadTip}}")) {
+                return;
+            }
+
+            for (let i = 0; i < pendingDownloads.length; i++) {
+                const file = pendingDownloads[i];
+
+                if (i > 0) {
+                    await new Promise(resolve => setTimeout(resolve, 1200));
+                }
+
+                try {
+                    const link = document.createElement('a');
+                    link.href = file.url;
+                    link.download = file.name;
+
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+
+                    link.click();
+
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                    }, 500);
+
+                } catch (err) {
+
+                }
+            } 
+         }
+
+        function clearList() {
+            if (confirm("{{H_ConfirmClearList}}")) {
+                const container = document.getElementById('downloadItems');
+                const panel = document.getElementById('downloadList');
+                pendingDownloads = [];
+                container.innerHTML = '';
+                panel.style.display = 'none';
+            }
+        }
+
+        function connect() {
+            if (ws && (ws.readyState < 2)) return;
+            const statusEl = document.getElementById('status');
+            ws = new WebSocket(`ws://${window.location.host}/?name=${encodeURIComponent(deviceName)}`);
+            ws.binaryType = 'arraybuffer';
+            ws.onopen = () => {
+                retryCount = 0;
+                statusEl.innerText = eval('`{{H_StatusConnected}}`');
+                statusEl.style.color = '#28CD41';
+            };
+
+            ws.onclose = (e) => {
+
+                if (isTransferring) {
+                    isTransferring = false;
+                    alert("{{H_AlertConnLost}}");
+                    location.reload();
+                    return;
+                }
+
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    setTimeout(connect, 3000);
+                }
+            };
+
+            ws.onmessage = async (e) => {
+                let data = e.data;
+
+                if (data instanceof Blob) {
+                    data = await data.text();
+                }
+
+                if (typeof data === 'string') {
+                    data = data.trim();
+                }
+
+                if (data === "ACK") {
+                    if (ackResolver) {
+                        ackResolver();
+                        ackResolver = null;
+                    }
+                } else if (data === "TRANSFER_COMPLETE") {
+                    if (finalResolver) {
+                        finalResolver();
+                        finalResolver = null;
+                    }
+                } else if (data.startsWith("ERROR:")) {
+                    alert(eval('`{{H_StatusBackendError}}`'));
+                    isTransferring = false;
+                }
+                else {
+                    try {
+
+                        const match = data.match(/\{[\s\S]*\}/);
+                        if (match) {
+                            const json = JSON.parse(match[0]);
+
+                            if (json.type === "NEW_FILES") {
+                                json.data.forEach(file => {
+                                    pendingDownloads.push({
+                                        name: file.name,
+                                        sizeText: file.sizeText,
+                                        url: file.url,
+                                        downloaded: false
+                                    });
+                                });
+                                renderDownloadList();
+                            }
+                        } else if (data.startsWith("ERROR:")) {
+                            alert(eval('`{{H_StatusBackendError}}`'));
+                            isTransferring = false;
+                        } else {
+                        }
+                    } catch (err) {
+
+                    }
+                }
+            };
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
+            if (files.length === 0) return alert('{{H_AlertNoFile}}');
+            if (!ws || ws.readyState !== WebSocket.OPEN) return alert('{{H_AlertNoConn}}');
+
+            isTransferring = true;
+            const overlay = document.getElementById('transferOverlay');
+            const smallStatus = document.getElementById('smallStatus');
+            const bigStatus = document.getElementById('bigStatus');
+            const statusEl = document.getElementById('status');
+            overlay.style.display = 'flex';
+            let successCount = 0;
+
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    if (!isTransferring) break;
+                    const file = files[i];
+                    let offset = 0;
+                    const CHUNK_SIZE = 1024 * 1024;
+                    let currentChunkIndex = 0;
+
+                    let fileName = file.name;
+                    let fileSize = file.size;
+
+                    ws.send(`NAME:${fileName}|${fileSize}`);
+
+                    await new Promise(r => setTimeout(r, 200));
+
+                    while (offset < file.size && isTransferring) {
+                        const end = Math.min(offset + CHUNK_SIZE, file.size);
+                        const blobChunk = file.slice(offset, end);
+                        const arrayBuffer = await blobChunk.arrayBuffer();
+                        const buffer = new Uint8Array(arrayBuffer);
+
+                        const waitForACK = new Promise((resolve, reject) => {
+                            const timeout = setTimeout(() => {
+                                cleanup();
+                                reject(new Error(eval('`{{H_ChunkTimeout}}`')));
+                            }, 10000);
+
+                            const handleMsg = (e) => {
+                                if (e.data === "ACK") {
+                                    cleanup();
+                                    resolve();
+                                } else if (e.data.startsWith("ERROR:")) {
+                                    cleanup();
+                                    reject(new Error(e.data));
+                                }
+                            };
+                            const cleanup = () => {
+                                ws.removeEventListener('message', handleMsg);
+                                clearTimeout(timeout);
+                            };
+                            ws.addEventListener('message', handleMsg);
+                        });
+
+                        ws.send(buffer);
+                        await waitForACK;
+
+                        offset = end;
+                        currentChunkIndex++;
+
+                        const percent = Math.round((offset / file.size) * 100);
+                        bigStatus.innerText = eval('`{{H_TransferIndex}}`');
+                        smallStatus.innerText = eval('`{{H_StatusTransferringDetail}}`');
+                        statusEl.innerText = eval('`{{H_StatusTransferringDetail}}`');
+                    }
+
+                    if (isTransferring) {
+                        ws.send("DONE"); 
+                        statusEl.innerText = eval('`{{H_StatusWaitingSave}}`');
+                        await new Promise((resolve) => {
+                            const handleFinal = (e) => {
+                                if (e.data === "TRANSFER_COMPLETE") {
+                                    ws.removeEventListener('message', handleFinal);
+                                    resolve();
+                                }
+                            };
+                            ws.addEventListener('message', handleFinal);
+                            setTimeout(() => {
+                                ws.removeEventListener('message', handleFinal);
+                                resolve();
+                            }, 3000);
+                        });
+                        successCount++;
+                    }
+                }
+
+                if (isTransferring && successCount > 0) {
+                    statusEl.innerText = eval('`{{H_StatusSendSuccess}}`');
+                    statusEl.style.color = '#28CD41';
+                    fileInput.value = '';
+                }
+
+            } catch (err) {
+                statusEl.innerText = '{{H_TransferError}} ' + err.message;
+                statusEl.style.color = '#FF3B30';
+            } finally {
+                isTransferring = false;
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 1000);
+            }
+        }
+
+        function cancelTransfer() {
+            if (confirm("{{H_ConfirmCancel}}")) {
+                isTransferring = false;
+                if (ws.readyState === 1) ws.send("CANCEL");
+            }
+        }
+
+        connect();
+    </script>
+</body>
+</html>

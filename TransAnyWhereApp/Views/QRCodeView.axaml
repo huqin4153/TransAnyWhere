@@ -1,0 +1,71 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:models="using:TransAnyWhereApp.Models"
+			 xmlns:vm="using:TransAnyWhereApp.ViewModels"
+			 x:Class="TransAnyWhereApp.Views.QRCodeView"
+			 x:DataType="vm:MainViewModel" >
+	<Grid Background="#AA000000" IsVisible="{Binding IsQrVisible}">
+		<Button Command="{Binding CloseQrCommand}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+		<Border Background="#1E1E1E" CornerRadius="12" Padding="25" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+			<StackPanel Spacing="15">
+				<TextBlock Text="{DynamicResource U_Title_ScanQR}" HorizontalAlignment="Center" FontWeight="Bold"/>
+
+				<Border Width="220" Height="220" Background="White" CornerRadius="8" Padding="10">
+					<Image Source="{Binding QrCodeImage}"
+						   RenderOptions.BitmapInterpolationMode="None"/>
+				</Border>
+
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+					<TextBlock Text="{Binding ConnectionString}"
+							   FontSize="12"
+							   Foreground="#888"
+							   VerticalAlignment="Center"
+							   MaxWidth="180"
+							   TextTrimming="CharacterEllipsis"/>
+
+					<Button Command="{Binding CopyConnectionStringCommand}"
+							Classes="LinkButton"
+							Padding="5,2">
+						<TextBlock Text="{DynamicResource U_Btn_Copy}" FontSize="11" Foreground="#007AFF"/>
+					</Button>
+				</StackPanel>
+
+				<DockPanel LastChildFill="True">
+					<TextBlock DockPanel.Dock="Left"
+							   Text="{DynamicResource U_Label_SelectNetwork}"
+							   FontSize="12"
+							   Foreground="#BBB"
+							   VerticalAlignment="Center"
+							   Margin="0,0,10,0"/>
+					<ComboBox ItemsSource="{Binding IpAddresses}"
+							  SelectedItem="{Binding SelectedIp}"
+							  HorizontalAlignment="Right"
+							  FontSize="12"
+							  MinHeight="28"
+							  Padding="8,2"
+							  Width="150"
+							  Foreground="White">
+						<ComboBox.Resources>
+							<SolidColorBrush x:Key="ComboBoxDropDownBackground">#2D2D2D</SolidColorBrush>
+							<SolidColorBrush x:Key="ComboBoxDropDownBorderBrush">#444444</SolidColorBrush>
+						</ComboBox.Resources>
+
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"
+										   Foreground="White"
+										   FontSize="12"
+										   Padding="2"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</DockPanel>
+
+				<Button Content="{DynamicResource U_Btn_Close}" Classes="Primary" HorizontalAlignment="Stretch" Command="{Binding CloseQrCommand}"/>
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>

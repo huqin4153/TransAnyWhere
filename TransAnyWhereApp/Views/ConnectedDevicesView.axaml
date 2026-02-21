@@ -1,0 +1,42 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:models="using:TransAnyWhereApp.Models"
+			 xmlns:vm="using:TransAnyWhereApp.ViewModels"
+			 x:Class="TransAnyWhereApp.Views.ConnectedDevicesView"
+			 x:DataType="vm:MainViewModel">
+	<StackPanel Spacing="8">
+		<TextBlock Text="{DynamicResource U_Title_ConnectedDevices}" FontSize="12" Foreground="#666" Margin="5,0"/>
+		<Border Classes="Card" Padding="10">
+			<ItemsControl ItemsSource="{Binding ConnectedClients}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Grid ColumnDefinitions="Auto, *, Auto" Margin="0,5">
+							<Ellipse Width="8" Height="8"
+									 Fill="#4CD964"
+									 Margin="0,0,10,0"
+									 VerticalAlignment="Center">
+								<Ellipse.Transitions>
+									<Transitions>
+										<DoubleTransition Property="Opacity" Duration="0:0:1" />
+									</Transitions>
+								</Ellipse.Transitions>
+							</Ellipse>
+
+							<TextBlock Grid.Column="1" Text="{Binding DeviceName}" VerticalAlignment="Center"/>
+
+							<Button Grid.Column="2"
+									Classes="ToolButton"
+									Command="{Binding $parent[UserControl].((vm:MainViewModel)DataContext).DisconnectClientCommand}"
+									CommandParameter="{Binding}"
+									Padding="8,4">
+								<TextBlock Text="{DynamicResource U_Btn_Disconnect}" FontSize="11" Foreground="#FF453A"/>
+							</Button>
+						</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Border>
+	</StackPanel>
+</UserControl>

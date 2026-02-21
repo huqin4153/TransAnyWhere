@@ -1,0 +1,15 @@
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Styles.Resources>
+		<SolidColorBrush x:Key="BrandBlue">#007AFF</SolidColorBrush>
+		<SolidColorBrush x:Key="BrandBlueHover">#1485FF</SolidColorBrush>
+		<SolidColorBrush x:Key="CardBackground">#1E1E1E</SolidColorBrush>
+		<SolidColorBrush x:Key="InputBackground">#2D2D2D</SolidColorBrush>
+		<SolidColorBrush x:Key="TextMain">#EEEEEE</SolidColorBrush>
+		<SolidColorBrush x:Key="TextBorder">#3F3F3F</SolidColorBrush>
+		<SolidColorBrush x:Key="ButtonBorder">#2A2A2A</SolidColorBrush>
+		<SolidColorBrush x:Key="ButtonHoverBg">#26007AFF</SolidColorBrush> <SolidColorBrush x:Key="CheckBoxForeground">#AAA</SolidColorBrush>
+		<CornerRadius x:Key="MainCornerRadius">6</CornerRadius>
+		<CornerRadius x:Key="ButtonCornerRadius">8</CornerRadius>
+	</Styles.Resources>
+</Styles>
