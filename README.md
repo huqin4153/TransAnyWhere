@@ -1,5 +1,17 @@
 # TransAnyWhere - Cross-Platform File Transfer
 
+# 📥 Downloads / 下载地址
+
+**Latest Version (v1.2):**
+- **Windows (v1.2)**: [TransAnyWhereApp.Desktop.exe.zip](./TransAnyWhereApp.Desktop.exe.zip)
+- **macOS (v1.2)**: [TransAnyWhere.zip](./TransAnyWhere.zip)
+
+> *Tips: macOS 用户下载后若提示“已损坏”，请参考下方的 [问题处理](#-troubleshooting--问题处理) 章节。*
+
+> **⚠️ Security Note / 安全提示:**
+> - SHA-256 checksums are currently not provided. Please verify the source before running.
+> - 暂未提供 SHA-256 校验码，请在运行前确认来源安全。
+
 ## 🚀 Publish Guide / 发布指南
 
 ### For Windows (Single Executable)
