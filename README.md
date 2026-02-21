@@ -1,75 +1,76 @@
 # TransAnyWhere - Cross-Platform File Transfer
 
-# 📥 Downloads / 下载地址
+## 📥 Downloads / 下载地址
 
 **Latest Version (v1.2):**
 - **Windows (v1.2)**: [TransAnyWhereApp.Desktop.exe.zip](./TransAnyWhereApp.Desktop.exe.zip)
 - **macOS (v1.2)**: [TransAnyWhere.zip](./TransAnyWhere.zip)
-
-> *Tips: macOS 用户下载后若提示“已损坏”，请参考下方的 [问题处理](#-troubleshooting--问题处理) 章节。*
+- **Linux**: See [Self-Build section] below.
 
 > **⚠️ Security Note / 安全提示:**
 > - SHA-256 checksums are currently not provided. Please verify the source before running.
 > - 暂未提供 SHA-256 校验码，请在运行前确认来源安全。
 
-## 🚀 Publish Guide / 发布指南
+---
 
-### For Windows (Single Executable)
-To generate a single-file executable with minimized size:
-dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+## ✨ Features / 核心功能
 
-### For macOS (Apple Silicon / Intel)
-We use Folder mode to avoid permission issues and the NETSDK1099 error:
-
-# Apple Silicon (M1/M2/M3)
-dotnet publish -c Release -r osx-arm64 --self-contained true /p:PublishSingleFile=false /p:PublishTrimmed=true /p:TrimMode=link -o ./dist
-
-# Intel Mac
-dotnet publish -c Release -r osx-x64 --self-contained true /p:PublishSingleFile=false /p:PublishTrimmed=true /p:TrimMode=link -o ./dist
+- **No Client Required**: Access via browser for bi-directional file transfer.
+  **免客户端**: 接收端通过浏览器即可实现文件双向传输。
+- **Zero Configuration**: No installation required. Run and transfer.
+  **零配置**: 即开即用，无需复杂设置。
+- **Secure Link**: Connections are only accepted via manual QR/ID authorization.
+  **安全连接**: 仅通过二维码/ID 手动授权，拒绝未授权访问。
+- **Cross-Platform**: Support for Windows, macOS, and Linux.
+  **跨平台**: 支持 Windows, macOS 以及 Linux。
 
 ---
 
-## 🛠️ Key Optimizations / 技术优化
+## 📖 Usage & Security / 使用说明与安全性
 
-- **Smart Networking**: Prioritizes WLAN/Wi-Fi adapters for stable transfers.
-  **智能网络**: 优先识别 WLAN/无线网卡，确保传输稳定。
-- **UI/UX**: Native Dark Mode support and cross-platform ComboBox styling.
-  **界面优化**: 原生深色模式支持，修复跨平台下拉框样式。
-- **Size Reduction**: Compressed from 50MB to 22MB via advanced trimming.
-  **体积优化**: 通过裁剪技术将体积从 50MB 压缩至 22MB。
+- **Connection Authorization**: New connections can only be established when the **QR Code/ID** is displayed.
+  **连接授权**: 仅在**显示二维码/ID**时才允许建立新连接，确保安全性。
+- **Auto-Reconnect**: Automatically attempts to reconnect if the network drops.
+  **自动重连**: 网络波动导致断开后会自动尝试重连。
+- **No Config Files**: Currently runs without any config files.
+  **无配置文件**: 程序不产生任何配置，如需增加此功能请留言。
+- **UI Design**: Functional priority! I am a developer, not a designer.
+  **界面美化**: 开发者非美工，以功能实现为主，请多包涵。
+
+---
+
+## 🚀 Build Guide / 编译与发布指南
+
+### 🐧 Linux Build (Linux 自行编译)
+Due to environment diversity, Linux users are encouraged to build from source:
+(Command: dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true)
+
+### 🪟 Windows (Single Executable)
+(Command: dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true)
+
+### 🍎 macOS (Apple Silicon)
+(Command: dotnet publish -c Release -r osx-arm64 --self-contained true /p:PublishSingleFile=false /p:PublishTrimmed=true /p:TrimMode=link -o ./dist)
 
 ---
 
 ## ❓ Troubleshooting / 问题处理
 
-### macOS "App is damaged" or "Cannot open"
-If macOS blocks the app, run the following in your terminal:
-若 macOS 提示文件损坏或无法打开，请执行：
-
-chmod +x ./TransAnyWhere
-xattr -cr ./TransAnyWhere
-
-### NETSDK1099 Build Error
-This occurs if SelfContained is not set during trimming. Always use --self-contained true as shown in the commands above.
-若编译报 NETSDK1099 错误，请确保在裁剪时开启了“独立部署”参数。
+- **macOS "App is damaged"**: Run 'xattr -cr ./TransAnyWhere' and 'chmod +x ./TransAnyWhere'.
+- **NETSDK1099 Error**: Ensure '--self-contained true' is used during publish.
 
 ---
 
-## ⚖️ Disclaimer / 免责声明
+## ⚖️ Disclaimer & Contribution / 免责声明与贡献说明
 
-This software is for educational and personal use only. The developer is not responsible for any data loss, security issues, or damages caused by the use of this tool. Use it at your own risk.
-本软件仅供教育与个人使用。开发者不对因使用本工具导致的任何数据丢失、安全问题或损失负责。请在自行承担风险的前提下使用。
+- **Disclaimer**: Use at your own risk. The developer is not responsible for any data loss.
+- **Contribution**: Currently personally maintained. External permissions are not yet established.
 
 ---
 
 ## 🤝 AI Collaboration / 协作记录
 
-This version (v1.2) was co-developed with Gemini (Including the Readme file).
+This version (v1.2) was co-developed with Gemini (Including this Readme).
 本版本 (v1.2) 由开发者与 Gemini 共同协作优化 (包括编写此 Readme)。
-
-- Logic: Multi-NIC detection logic. / 逻辑: 多网卡智能识别。
-- Build: macOS trimming and size optimization. / 构建: macOS 环境裁剪与体积优化。
-- UI: Cross-platform Avalonia styling fixes. / UI: 跨平台 Avalonia 样式修正。
 
 ---
 © 2026 TransAnyWhere
