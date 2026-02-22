@@ -1,5 +1,7 @@
 # TransAnyWhere - Cross-Platform File Transfer
 
+
+
 ## 📥 Downloads / 下载地址
 
 **Latest Version (v1.2):**
@@ -14,7 +16,19 @@
 > - 暂未提供 SHA-256 校验码，请在运行前确认来源安全。
 
 ---
+## ⚠️ Special Note / 特别注意
 
+- **Port 80 Only**: This program is fixed to use **Port 80**. If it fails, please check for port conflicts.
+  **固定 80 端口**: 本程序固定使用 **80 端口**。如果启动失败，请检查端口是否被占用。
+- **Privilege Requirements / 权限要求**:
+  - **Windows**: Please try **"Run as Administrator"**.
+    **Windows**: 请尝试以**管理员身份**运行。
+  - **Linux / Raspberry Pi**: Use `sudo ./TransAnyWhere` or run `sudo setcap 'cap_net_bind_service=+ep' ./TransAnyWhere`.
+    **Linux / 树莓派**: 请使用 `sudo` 运行，或通过 `setcap` 命令授予端口权限。
+- **Custom Port**: If you need to change the port, please modify the source code or leave an Issue.
+  **自定义端口**: 如需更改端口，请自行修改源码或在 Issues 中留言。
+  
+---
 ## ✨ Features / 核心功能
 
 - **No Client Required**: Access via browser for bi-directional file transfer.
