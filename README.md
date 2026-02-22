@@ -21,8 +21,8 @@
 - **Port 80 Only**: This program is fixed to use **Port 80**. If it fails, please check for port conflicts.
   **固定 80 端口**: 本程序固定使用 **80 端口**。如果启动失败，请检查端口是否被占用。
 - **Privilege Requirements / 权限要求**:
-  - **Windows**: Please try **"Run as Administrator"**.
-    **Windows**: 请尝试以**管理员身份**运行。
+  - **Windows**: If it fails to start, please try **"Run as Administrator"**.
+    **Windows**: 端口启动失败时，请尝试以**管理员身份**运行。
   - **Linux / Raspberry Pi**: Use `sudo ./TransAnyWhere` or run `sudo setcap 'cap_net_bind_service=+ep' ./TransAnyWhere`.
     **Linux / 树莓派**: 请使用 `sudo` 运行，或通过 `setcap` 命令授予端口权限。
 - **Custom Port**: If you need to change the port, please modify the source code or leave an Issue.
