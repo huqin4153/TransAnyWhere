@@ -5,7 +5,9 @@
 **Latest Version (v1.2):**
 - **Windows (v1.2)**: [TransAnyWhereApp.Desktop.exe.zip](./TransAnyWhereApp.Desktop.exe.zip)
 - **macOS (v1.2)**: [TransAnyWhere.zip](./TransAnyWhere.zip)
-- **Linux**: See [Self-Build section] below.
+- **Linux ARM64 (Raspberry Pi 5)**: [TransAnyWhereApp.linux-arm64.rar](./TransAnyWhereApp.linux-arm64.rar)
+- *(Note: Run `chmod +x TransAnyWhere` after extracting / 解压后请执行权限授予命令)*
+- **Other Linux**: See [Self-Build section] below.
 
 > **⚠️ Security Note / 安全提示:**
 > - SHA-256 checksums are currently not provided. Please verify the source before running.
@@ -21,8 +23,8 @@
   **零配置**: 即开即用，无需复杂设置。
 - **Secure Link**: Connections are only accepted via manual QR/ID authorization.
   **安全连接**: 仅通过二维码/ID 手动授权，拒绝未授权访问。
-- **Cross-Platform**: Support for Windows, macOS, and Linux.
-  **跨平台**: 支持 Windows, macOS 以及 Linux。
+- **High Compatibility**: Support for Windows, macOS, and **Raspberry Pi (ARM64)**.
+  **高兼容性**: 支持 Win, Mac 以及**树莓派 5** 等 ARM64 设备。
 
 ---
 
