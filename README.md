@@ -5,7 +5,7 @@
 ## 📥 Downloads / 下载地址
 
 **Latest Version (v1.2):**
-- **Windows (v1.2)**: [TransAnyWhereApp.Desktop.exe.zip](./TransAnyWhereApp.Desktop.exe.zip)
+- **Windows (v1.2)**: [TransAnyWhereApp.Desktop.zip](./TransAnyWhereApp.Desktop.zip)
 - **macOS (v1.2)**: [TransAnyWhere.zip](./TransAnyWhere.zip)
 - **Linux ARM64 (Raspberry Pi 5)**: [TransAnyWhereApp.linux-arm64.rar](./TransAnyWhereApp.linux-arm64.rar)
 - *(Note: Run `chmod +x TransAnyWhere` after extracting / 解压后请执行权限授予命令)*
